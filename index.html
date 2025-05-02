@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exciting Event Registration</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Header + Description Card -->
+    <div class="details">
+      <header>
+        <img src="resources/sde.jpg" alt="Event Poster" />
+        <h1>Crack Your SDE Interview: Tips & Tricks</h1>
+      </header>
+
+      <div class="description">
+        Join us for a powerful session packed with insights, strategies, and guidance to ace your Software Development Engineer interviews. Learn from experienced professionals and elevate your preparation game.
+      </div>
+    </div>
+
+    <!-- Event Details Card -->
+    <div class="details">
+      <h3>Event Details</h3>
+      <ul>
+        <li><strong>Date:</strong> May 15, 2025</li>
+        <li><strong>Time:</strong> 5:00 PM – 7:00 PM</li>
+        <li><strong>Venue:</strong> Online (Zoom – link after registration)</li>
+        <li><strong>Speaker:</strong> John Doe (Ex-Amazon SDE)</li>
+      </ul>
+    </div>
+
+    <!-- Registration Form Card -->
+    <div class="details">
+      <h3>Register Now</h3>
+      <form id="eventForm">
+        <div class="form-group">
+          <input type="text" name="Name" placeholder="Full Name" required />
+        </div>
+        <div class="form-group">
+          <input type="email" name="Email" placeholder="Email Address" required />
+        </div>
+        <div class="form-group">
+          <input type="text" name="Contact" placeholder="Contact Number" required />
+        </div>
+        <div class="form-group">
+          <input type="text" name="College" placeholder="College Name" required />
+        </div>
+        <div class="form-group">
+          <input type="text" name="Branch" placeholder="Branch" required />
+        </div>
+        <div class="form-group">
+          <select name="Year" required>
+            <option value="">Select Year</option>
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+          </select>
+        </div>
+        <button type="submit">Submit</button>
+        <div id="msg" class="success"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('eventForm');
+    const msg = document.getElementById('msg');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const button = form.querySelector('button');
+      button.disabled = true;
+      msg.textContent = "Submitting...";
+      msg.className = "success";
+
+      const formData = new FormData(form);
+      fetch("https://script.google.com/macros/s/AKfycbw5ueFRG94HYpz34PQlfxRd6kxGoavU07xNPop0dfZaRi69GLFOLFNFRwwLkkUOPo_x/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          msg.textContent = "Registration successful! Check your email for the Zoom link.";
+          msg.className = "success ok";
+          form.reset();
+        } else {
+          msg.textContent = "Failed to register. Try again.";
+          msg.className = "success error";
+        }
+      })
+      .catch(() => {
+        msg.textContent = "Error occurred. Try again later.";
+        msg.className = "success error";
+      })
+      .finally(() => {
+        button.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>
